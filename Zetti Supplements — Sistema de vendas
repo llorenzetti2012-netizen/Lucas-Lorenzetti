@@ -1,1 +1,236 @@
-{"nbformat":4,"nbformat_minor":0,"metadata":{"colab":{"provenance":[]},"kernelspec":{"name":"python3","display_name":"Python 3"},"language_info":{"name":"python"}},"cells":[{"cell_type":"code","source":["# =========================================\n","# ZETTI SUPPLEMENTS\n","# Projeto Final - Lógica de Programação\n","# =========================================\n","\n","produtos = [\n","    [\"Whey Concentrado Chocolate\", \"900g\", 119.90],\n","    [\"Whey Concentrado Baunilha\", \"900g\", 119.90],\n","    [\"Whey Concentrado Morango\", \"900g\", 119.90],\n","\n","    [\"Whey Isolado Chocolate\", \"900g\", 179.90],\n","    [\"Whey Isolado Baunilha\", \"900g\", 179.90],\n","    [\"Whey Isolado Cookies\", \"900g\", 179.90],\n","\n","    [\"Creatina Monohidratada\", \"300g\", 89.90],\n","\n","    [\"Cafeína 200mg\", \"120 cápsulas\", 49.90],\n","    [\"Cafeína 300mg\", \"60 cápsulas\", 49.90],\n","    [\"Cafeína 420mg\", \"60 cápsulas\", 69.90],\n","\n","    [\"Pré-Treino Explosive 200mg\", \"300g\", 109.90],\n","    [\"Pré-Treino Nitro 300mg\", \"300g\", 119.90],\n","    [\"Pré-Treino Rage 420mg\", \"300g\", 129.90],\n","\n","    [\"Ômega 3\", \"120 cápsulas\", 59.90],\n","    [\"BCAA\", \"300g\", 69.90],\n","\n","    [\"Colágeno Tipo 1 e 3\", \"300g\", 79.90],\n","    [\"Colágeno Tipo 2\", \"60 cápsulas\", 89.90]\n","]\n","\n","carrinho = []\n","\n","nome = \"\"\n","idade = 0\n","peso = 0\n","altura = 0\n","\n","def calcular_imc(peso, altura):\n","    return peso / (altura ** 2)\n","\n","\n","def cadastro_cliente():\n","    global nome, idade, peso, altura\n","\n","    print(\"=\" * 40)\n","    print(\"  BEM-VINDO(A) AO ZETTI SUPPLEMENTS\")\n","    print(\"=\" * 40)\n","\n","    nome = input(\"Nome: \")\n","    idade =  int(input(\"Idade: \"))\n","    peso = float(input(\"Peso (kg): \"))\n","    altura = float(input(\"Altura (m): \"))\n","\n","    imc = calcular_imc(peso, altura)\n","\n","    print(f\"\\nBem-vindo, {nome}!\")\n","    print(f\"Seu IMC é {imc:.2f}\")\n","\n","    if imc < 18.5:\n","        print(\"Classificação: Abaixo do peso\")\n","    elif imc < 25:\n","        print(\"Classificação: Peso normal\")\n","    elif imc < 30:\n","        print(\"Classificação: Sobrepeso\")\n","    else:\n","        print(\"Classificação: Obesidade\")\n","\n","def menu():\n","    print(\"\\n\" + \"=\" * 40)\n","    print(\"1 - Objetivos\")\n","    print(\"2 - Catálogo Completo\")\n","    print(\"3 - Ver Carrinho\")\n","    print(\"4 - Finalizar Compra\")\n","    print(\"0 - Sair\")\n","    print(\"=\" * 40)\n","\n","\n","def mostrar_objetivos():\n","\n","    print(\"\\nOBJETIVOS\")\n","\n","    print(\"1 - Ganho de Massa Muscular\")\n","    print(\"2 - Emagrecimento\")\n","    print(\"3 - Performance\")\n","    print(\"4 - Saúde\")\n","\n","    opcao = int(input(\"Escolha: \"))\n","\n","    print()\n","\n","    if opcao == 1:\n","        print(\"Recomendação:\")\n","        print(\"- Whey Concentrado\")\n","        print(\"- Creatina\")\n","        print(\"- BCAA\")\n","\n","    elif opcao == 2:\n","        print(\"Recomendação:\")\n","        print(\"- Whey Concentrado/Isolado\")\n","        print(\"- Cafeína\")\n","        print(\"- Pré-Treino\")\n","\n","    elif opcao == 3:\n","        print(\"Recomendação:\")\n","        print(\"- Creatina\")\n","        print(\"- Pré-Treino\")\n","        print(\"- BCAA\")\n","\n","    elif opcao == 4:\n","        print(\"Recomendação:\")\n","        print(\"- Ômega 3\")\n","        print(\"- Colágeno\")\n","        print(\"- Whey Isolado\")\n","\n","\n","def mostrar_catalogo():\n","\n","    print(\"\\nCATÁLOGO DE PRODUTOS\")\n","\n","    for i in range(len(produtos)):\n","        print(f\"{i + 1} - {produtos[i][0]}\")\n","        print(f\"    Quantidade: {produtos[i][1]}\")\n","        print(f\"    Preço: R${produtos[i][2]:.2f}\")\n","\n","    adicionar = input(\"\\nDeseja adicionar ao carrinho? (S/N): \")\n","\n","    if adicionar.upper() == \"S\":\n","\n","        codigo = int(input(\"Número do produto: \"))\n","\n","        if codigo >= 1 and codigo <= len(produtos):\n","\n","            produto = produtos[codigo - 1]\n","\n","            nome_produto = produto[0]\n","\n","            if idade < 16 and (\"Cafeína\" in nome_produto or \"Pré-Treino\" in nome_produto):\n","                print(\"\\n**ATENÇÃO!**\")\n","                print(\"Venda não permitida para menores de 16 anos!\")\n","\n","            else:\n","                carrinho.append(produto)\n","                print(\"Produto adicionado ao carrinho!\")\n","\n","        else:\n","            print(\"Produto inválido.\")\n","\n","\n","def ver_carrinho():\n","\n","    if len(carrinho) == 0:\n","        print(\"\\nCarrinho vazio.\")\n","        return\n","\n","    total = 0\n","\n","    print(\"\\nSEU CARRINHO\")\n","\n","    for i in range(len(carrinho)):\n","        print(f\"{i + 1} - {carrinho[i][0]} - R${carrinho[i][2]:.2f}\")\n","        total += carrinho[i][2]\n","\n","    print(f\"\\nTotal parcial: R${total:.2f}\")\n","\n","\n","def finalizar_compra():\n","\n","    if len(carrinho) == 0:\n","        print(\"\\nCarrinho vazio.\")\n","        return\n","\n","    subtotal = 0\n","\n","    for item in carrinho:\n","        subtotal += item[2]\n","\n","    desconto = 0\n","\n","    if subtotal >= 500:\n","        desconto = subtotal * 0.10\n","\n","    elif subtotal >= 300:\n","        desconto = subtotal * 0.05\n","\n","    total = subtotal - desconto\n","\n","    print(\"\\n\" + \"*\" * 40)\n","    print(\"           NOTA FISCAL\")\n","    print(\"*\" * 40)\n","\n","    print(f\"Cliente: {nome}\")\n","\n","    print()\n","\n","    for item in carrinho:\n","        print(f\"{item[0]}......R${item[2]:.2f}\")\n","\n","    print(\"\\n\" + \"-\" * 40)\n","\n","    print(f\"Subtotal:......R${subtotal:.2f}\")\n","    print(f\"Desconto:......R${desconto:.2f}\")\n","    print(f\"Total da compra:......R${total:.2f}\")\n","\n","    print(\"\\nObrigado pela compra!\")\n","\n","    print(\"=\" * 40)\n","\n","\n","cadastro_cliente()\n","\n","opcao = -1\n","\n","while opcao != 0:\n","\n","    menu()\n","\n","    opcao = int(input(\"Escolha uma opção: \"))\n","\n","    if opcao == 1:\n","        mostrar_objetivos()\n","\n","    elif opcao == 2:\n","        mostrar_catalogo()\n","\n","    elif opcao == 3:\n","        ver_carrinho()\n","\n","    elif opcao == 4:\n","        finalizar_compra()\n","\n","    elif opcao == 0:\n","        print(\"\\nObrigado por visitar a Zetti Supplements!\")\n","\n","    else:\n","        print(\"Opção inválida.\")"],"metadata":{"id":"znKMK1Vq-M3A","colab":{"base_uri":"https://localhost:8080/"},"executionInfo":{"status":"ok","timestamp":1783911555775,"user_tz":180,"elapsed":318344,"user":{"displayName":"Lucas Lorenzetti","userId":"01182467138325450062"}},"outputId":"30f6f181-4856-4f8c-e381-0edbe8b5befe"},"execution_count":null,"outputs":[{"output_type":"stream","name":"stdout","text":["========================================\n","  BEM-VINDO(A) AO ZETTI SUPPLEMENTS\n","========================================\n","Nome: Alvaro\n","Idade: 20\n","Peso (kg): 72\n","Altura (m): 1.80\n","\n","Bem-vindo, Alvaro!\n","Seu IMC é 22.22\n","Classificação: Peso normal\n","\n","========================================\n","1 - Objetivos\n","2 - Catálogo Completo\n","3 - Ver Carrinho\n","4 - Finalizar Compra\n","0 - Sair\n","========================================\n","Escolha uma opção: 1\n","\n","OBJETIVOS\n","1 - Ganho de Massa Muscular\n","2 - Emagrecimento\n","3 - Performance\n","4 - Saúde\n","Escolha: 1\n","\n","Recomendação:\n","- Whey Concentrado\n","- Creatina\n","- BCAA\n","\n","========================================\n","1 - Objetivos\n","2 - Catálogo Completo\n","3 - Ver Carrinho\n","4 - Finalizar Compra\n","0 - Sair\n","========================================\n","Escolha uma opção: 1\n","\n","OBJETIVOS\n","1 - Ganho de Massa Muscular\n","2 - Emagrecimento\n","3 - Performance\n","4 - Saúde\n","Escolha: 2\n","\n","Recomendação:\n","- Whey Concentrado/Isolado\n","- Cafeína\n","- Pré-Treino\n","\n","========================================\n","1 - Objetivos\n","2 - Catálogo Completo\n","3 - Ver Carrinho\n","4 - Finalizar Compra\n","0 - Sair\n","========================================\n","Escolha uma opção: 2\n","\n","CATÁLOGO DE PRODUTOS\n","1 - Whey Concentrado Chocolate\n","    Quantidade: 900g\n","    Preço: R$119.90\n","2 - Whey Concentrado Baunilha\n","    Quantidade: 900g\n","    Preço: R$119.90\n","3 - Whey Concentrado Morango\n","    Quantidade: 900g\n","    Preço: R$119.90\n","4 - Whey Isolado Chocolate\n","    Quantidade: 900g\n","    Preço: R$179.90\n","5 - Whey Isolado Baunilha\n","    Quantidade: 900g\n","    Preço: R$179.90\n","6 - Whey Isolado Cookies\n","    Quantidade: 900g\n","    Preço: R$179.90\n","7 - Creatina Monohidratada\n","    Quantidade: 300g\n","    Preço: R$89.90\n","8 - Cafeína 200mg\n","    Quantidade: 120 cápsulas\n","    Preço: R$49.90\n","9 - Cafeína 300mg\n","    Quantidade: 60 cápsulas\n","    Preço: R$49.90\n","10 - Cafeína 420mg\n","    Quantidade: 60 cápsulas\n","    Preço: R$69.90\n","11 - Pré-Treino Explosive 200mg\n","    Quantidade: 300g\n","    Preço: R$109.90\n","12 - Pré-Treino Nitro 300mg\n","    Quantidade: 300g\n","    Preço: R$119.90\n","13 - Pré-Treino Rage 420mg\n","    Quantidade: 300g\n","    Preço: R$129.90\n","14 - Ômega 3\n","    Quantidade: 120 cápsulas\n","    Preço: R$59.90\n","15 - BCAA\n","    Quantidade: 300g\n","    Preço: R$69.90\n","16 - Colágeno Tipo 1 e 3\n","    Quantidade: 300g\n","    Preço: R$79.90\n","17 - Colágeno Tipo 2\n","    Quantidade: 60 cápsulas\n","    Preço: R$89.90\n","\n","Deseja adicionar ao carrinho? (S/N): s\n","Número do produto: 7\n","Produto adicionado ao carrinho!\n","\n","========================================\n","1 - Objetivos\n","2 - Catálogo Completo\n","3 - Ver Carrinho\n","4 - Finalizar Compra\n","0 - Sair\n","========================================\n","Escolha uma opção: 2\n","\n","CATÁLOGO DE PRODUTOS\n","1 - Whey Concentrado Chocolate\n","    Quantidade: 900g\n","    Preço: R$119.90\n","2 - Whey Concentrado Baunilha\n","    Quantidade: 900g\n","    Preço: R$119.90\n","3 - Whey Concentrado Morango\n","    Quantidade: 900g\n","    Preço: R$119.90\n","4 - Whey Isolado Chocolate\n","    Quantidade: 900g\n","    Preço: R$179.90\n","5 - Whey Isolado Baunilha\n","    Quantidade: 900g\n","    Preço: R$179.90\n","6 - Whey Isolado Cookies\n","    Quantidade: 900g\n","    Preço: R$179.90\n","7 - Creatina Monohidratada\n","    Quantidade: 300g\n","    Preço: R$89.90\n","8 - Cafeína 200mg\n","    Quantidade: 120 cápsulas\n","    Preço: R$49.90\n","9 - Cafeína 300mg\n","    Quantidade: 60 cápsulas\n","    Preço: R$49.90\n","10 - Cafeína 420mg\n","    Quantidade: 60 cápsulas\n","    Preço: R$69.90\n","11 - Pré-Treino Explosive 200mg\n","    Quantidade: 300g\n","    Preço: R$109.90\n","12 - Pré-Treino Nitro 300mg\n","    Quantidade: 300g\n","    Preço: R$119.90\n","13 - Pré-Treino Rage 420mg\n","    Quantidade: 300g\n","    Preço: R$129.90\n","14 - Ômega 3\n","    Quantidade: 120 cápsulas\n","    Preço: R$59.90\n","15 - BCAA\n","    Quantidade: 300g\n","    Preço: R$69.90\n","16 - Colágeno Tipo 1 e 3\n","    Quantidade: 300g\n","    Preço: R$79.90\n","17 - Colágeno Tipo 2\n","    Quantidade: 60 cápsulas\n","    Preço: R$89.90\n","\n","Deseja adicionar ao carrinho? (S/N): s\n","Número do produto: 12\n","Produto adicionado ao carrinho!\n","\n","========================================\n","1 - Objetivos\n","2 - Catálogo Completo\n","3 - Ver Carrinho\n","4 - Finalizar Compra\n","0 - Sair\n","========================================\n","Escolha uma opção: 2\n","\n","CATÁLOGO DE PRODUTOS\n","1 - Whey Concentrado Chocolate\n","    Quantidade: 900g\n","    Preço: R$119.90\n","2 - Whey Concentrado Baunilha\n","    Quantidade: 900g\n","    Preço: R$119.90\n","3 - Whey Concentrado Morango\n","    Quantidade: 900g\n","    Preço: R$119.90\n","4 - Whey Isolado Chocolate\n","    Quantidade: 900g\n","    Preço: R$179.90\n","5 - Whey Isolado Baunilha\n","    Quantidade: 900g\n","    Preço: R$179.90\n","6 - Whey Isolado Cookies\n","    Quantidade: 900g\n","    Preço: R$179.90\n","7 - Creatina Monohidratada\n","    Quantidade: 300g\n","    Preço: R$89.90\n","8 - Cafeína 200mg\n","    Quantidade: 120 cápsulas\n","    Preço: R$49.90\n","9 - Cafeína 300mg\n","    Quantidade: 60 cápsulas\n","    Preço: R$49.90\n","10 - Cafeína 420mg\n","    Quantidade: 60 cápsulas\n","    Preço: R$69.90\n","11 - Pré-Treino Explosive 200mg\n","    Quantidade: 300g\n","    Preço: R$109.90\n","12 - Pré-Treino Nitro 300mg\n","    Quantidade: 300g\n","    Preço: R$119.90\n","13 - Pré-Treino Rage 420mg\n","    Quantidade: 300g\n","    Preço: R$129.90\n","14 - Ômega 3\n","    Quantidade: 120 cápsulas\n","    Preço: R$59.90\n","15 - BCAA\n","    Quantidade: 300g\n","    Preço: R$69.90\n","16 - Colágeno Tipo 1 e 3\n","    Quantidade: 300g\n","    Preço: R$79.90\n","17 - Colágeno Tipo 2\n","    Quantidade: 60 cápsulas\n","    Preço: R$89.90\n","\n","Deseja adicionar ao carrinho? (S/N): 10\n","\n","========================================\n","1 - Objetivos\n","2 - Catálogo Completo\n","3 - Ver Carrinho\n","4 - Finalizar Compra\n","0 - Sair\n","========================================\n","Escolha uma opção: 3\n","\n","SEU CARRINHO\n","1 - Creatina Monohidratada - R$89.90\n","2 - Pré-Treino Nitro 300mg - R$119.90\n","\n","Total parcial: R$209.80\n","\n","========================================\n","1 - Objetivos\n","2 - Catálogo Completo\n","3 - Ver Carrinho\n","4 - Finalizar Compra\n","0 - Sair\n","========================================\n","Escolha uma opção: 2\n","\n","CATÁLOGO DE PRODUTOS\n","1 - Whey Concentrado Chocolate\n","    Quantidade: 900g\n","    Preço: R$119.90\n","2 - Whey Concentrado Baunilha\n","    Quantidade: 900g\n","    Preço: R$119.90\n","3 - Whey Concentrado Morango\n","    Quantidade: 900g\n","    Preço: R$119.90\n","4 - Whey Isolado Chocolate\n","    Quantidade: 900g\n","    Preço: R$179.90\n","5 - Whey Isolado Baunilha\n","    Quantidade: 900g\n","    Preço: R$179.90\n","6 - Whey Isolado Cookies\n","    Quantidade: 900g\n","    Preço: R$179.90\n","7 - Creatina Monohidratada\n","    Quantidade: 300g\n","    Preço: R$89.90\n","8 - Cafeína 200mg\n","    Quantidade: 120 cápsulas\n","    Preço: R$49.90\n","9 - Cafeína 300mg\n","    Quantidade: 60 cápsulas\n","    Preço: R$49.90\n","10 - Cafeína 420mg\n","    Quantidade: 60 cápsulas\n","    Preço: R$69.90\n","11 - Pré-Treino Explosive 200mg\n","    Quantidade: 300g\n","    Preço: R$109.90\n","12 - Pré-Treino Nitro 300mg\n","    Quantidade: 300g\n","    Preço: R$119.90\n","13 - Pré-Treino Rage 420mg\n","    Quantidade: 300g\n","    Preço: R$129.90\n","14 - Ômega 3\n","    Quantidade: 120 cápsulas\n","    Preço: R$59.90\n","15 - BCAA\n","    Quantidade: 300g\n","    Preço: R$69.90\n","16 - Colágeno Tipo 1 e 3\n","    Quantidade: 300g\n","    Preço: R$79.90\n","17 - Colágeno Tipo 2\n","    Quantidade: 60 cápsulas\n","    Preço: R$89.90\n","\n","Deseja adicionar ao carrinho? (S/N): s\n","Número do produto: 1\n","Produto adicionado ao carrinho!\n","\n","========================================\n","1 - Objetivos\n","2 - Catálogo Completo\n","3 - Ver Carrinho\n","4 - Finalizar Compra\n","0 - Sair\n","========================================\n","Escolha uma opção: 3\n","\n","SEU CARRINHO\n","1 - Creatina Monohidratada - R$89.90\n","2 - Pré-Treino Nitro 300mg - R$119.90\n","3 - Whey Concentrado Chocolate - R$119.90\n","\n","Total parcial: R$329.70\n","\n","========================================\n","1 - Objetivos\n","2 - Catálogo Completo\n","3 - Ver Carrinho\n","4 - Finalizar Compra\n","0 - Sair\n","========================================\n","Escolha uma opção: 4\n","\n","****************************************\n","           NOTA FISCAL\n","****************************************\n","Cliente: Alvaro\n","\n","Creatina Monohidratada......R$89.90\n","Pré-Treino Nitro 300mg......R$119.90\n","Whey Concentrado Chocolate......R$119.90\n","\n","----------------------------------------\n","Subtotal:......R$329.70\n","Desconto:......R$16.49\n","Total da compra:......R$313.22\n","\n","Obrigado pela compra!\n","========================================\n","\n","========================================\n","1 - Objetivos\n","2 - Catálogo Completo\n","3 - Ver Carrinho\n","4 - Finalizar Compra\n","0 - Sair\n","========================================\n","Escolha uma opção: 0\n","\n","Obrigado por visitar a Zetti Supplements!\n"]}]}]}
+# =========================================
+# ZETTI SUPPLEMENTS
+# Projeto Final - Lógica de Programação
+# =========================================
+
+produtos = [
+    ["Whey Concentrado Chocolate", "900g", 119.90],
+    ["Whey Concentrado Baunilha", "900g", 119.90],
+    ["Whey Concentrado Morango", "900g", 119.90],
+
+    ["Whey Isolado Chocolate", "900g", 179.90],
+    ["Whey Isolado Baunilha", "900g", 179.90],
+    ["Whey Isolado Cookies", "900g", 179.90],
+
+    ["Creatina Monohidratada", "300g", 89.90],
+
+    ["Cafeína 200mg", "120 cápsulas", 49.90],
+    ["Cafeína 300mg", "60 cápsulas", 49.90],
+    ["Cafeína 420mg", "60 cápsulas", 69.90],
+
+    ["Pré-Treino Explosive 200mg", "300g", 109.90],
+    ["Pré-Treino Nitro 300mg", "300g", 119.90],
+    ["Pré-Treino Rage 420mg", "300g", 129.90],
+
+    ["Ômega 3", "120 cápsulas", 59.90],
+    ["BCAA", "300g", 69.90],
+
+    ["Colágeno Tipo 1 e 3", "300g", 79.90],
+    ["Colágeno Tipo 2", "60 cápsulas", 89.90]
+]
+
+carrinho = []
+
+nome = ""
+idade = 0
+peso = 0
+altura = 0
+
+def calcular_imc(peso, altura):
+    return peso / (altura ** 2)
+
+
+def cadastro_cliente():
+    global nome, idade, peso, altura
+
+    print("=" * 40)
+    print("  BEM-VINDO(A) AO ZETTI SUPPLEMENTS")
+    print("=" * 40)
+
+    nome = input("Nome: ")
+    idade =  int(input("Idade: "))
+    peso = float(input("Peso (kg): "))
+    altura = float(input("Altura (m): "))
+
+    imc = calcular_imc(peso, altura)
+
+    print(f"\nBem-vindo, {nome}!")
+    print(f"Seu IMC é {imc:.2f}")
+
+    if imc < 18.5:
+        print("Classificação: Abaixo do peso")
+    elif imc < 25:
+        print("Classificação: Peso normal")
+    elif imc < 30:
+        print("Classificação: Sobrepeso")
+    else:
+        print("Classificação: Obesidade")
+
+def menu():
+    print("\n" + "=" * 40)
+    print("1 - Objetivos")
+    print("2 - Catálogo Completo")
+    print("3 - Ver Carrinho")
+    print("4 - Finalizar Compra")
+    print("0 - Sair")
+    print("=" * 40)
+
+
+def mostrar_objetivos():
+
+    print("\nOBJETIVOS")
+
+    print("1 - Ganho de Massa Muscular")
+    print("2 - Emagrecimento")
+    print("3 - Performance")
+    print("4 - Saúde")
+
+    opcao = int(input("Escolha: "))
+
+    print()
+
+    if opcao == 1:
+        print("Recomendação:")
+        print("- Whey Concentrado")
+        print("- Creatina")
+        print("- BCAA")
+
+    elif opcao == 2:
+        print("Recomendação:")
+        print("- Whey Concentrado/Isolado")
+        print("- Cafeína")
+        print("- Pré-Treino")
+
+    elif opcao == 3:
+        print("Recomendação:")
+        print("- Creatina")
+        print("- Pré-Treino")
+        print("- BCAA")
+
+    elif opcao == 4:
+        print("Recomendação:")
+        print("- Ômega 3")
+        print("- Colágeno")
+        print("- Whey Isolado")
+
+
+def mostrar_catalogo():
+
+    print("\nCATÁLOGO DE PRODUTOS")
+
+    for i in range(len(produtos)):
+        print(f"{i + 1} - {produtos[i][0]}")
+        print(f"    Quantidade: {produtos[i][1]}")
+        print(f"    Preço: R${produtos[i][2]:.2f}")
+
+    adicionar = input("\nDeseja adicionar ao carrinho? (S/N): ")
+
+    if adicionar.upper() == "S":
+
+        codigo = int(input("Número do produto: "))
+
+        if codigo >= 1 and codigo <= len(produtos):
+
+            produto = produtos[codigo - 1]
+
+            nome_produto = produto[0]
+
+            if idade < 16 and ("Cafeína" in nome_produto or "Pré-Treino" in nome_produto):
+                print("\n**ATENÇÃO!**")
+                print("Venda não permitida para menores de 16 anos!")
+
+            else:
+                carrinho.append(produto)
+                print("Produto adicionado ao carrinho!")
+
+        else:
+            print("Produto inválido.")
+
+
+def ver_carrinho():
+
+    if len(carrinho) == 0:
+        print("\nCarrinho vazio.")
+        return
+
+    total = 0
+
+    print("\nSEU CARRINHO")
+
+    for i in range(len(carrinho)):
+        print(f"{i + 1} - {carrinho[i][0]} - R${carrinho[i][2]:.2f}")
+        total += carrinho[i][2]
+
+    print(f"\nTotal parcial: R${total:.2f}")
+
+
+def finalizar_compra():
+
+    if len(carrinho) == 0:
+        print("\nCarrinho vazio.")
+        return
+
+    subtotal = 0
+
+    for item in carrinho:
+        subtotal += item[2]
+
+    desconto = 0
+
+    if subtotal >= 500:
+        desconto = subtotal * 0.10
+
+    elif subtotal >= 300:
+        desconto = subtotal * 0.05
+
+    total = subtotal - desconto
+
+    print("\n" + "*" * 40)
+    print("           NOTA FISCAL")
+    print("*" * 40)
+
+    print(f"Cliente: {nome}")
+
+    print()
+
+    for item in carrinho:
+        print(f"{item[0]}......R${item[2]:.2f}")
+
+    print("\n" + "-" * 40)
+
+    print(f"Subtotal:......R${subtotal:.2f}")
+    print(f"Desconto:......R${desconto:.2f}")
+    print(f"Total da compra:......R${total:.2f}")
+
+    print("\nObrigado pela compra!")
+
+    print("=" * 40)
+
+
+cadastro_cliente()
+
+opcao = -1
+
+while opcao != 0:
+
+    menu()
+
+    opcao = int(input("Escolha uma opção: "))
+
+    if opcao == 1:
+        mostrar_objetivos()
+
+    elif opcao == 2:
+        mostrar_catalogo()
+
+    elif opcao == 3:
+        ver_carrinho()
+
+    elif opcao == 4:
+        finalizar_compra()
+
+    elif opcao == 0:
+        print("\nObrigado por visitar a Zetti Supplements!")
+
+    else:
+        print("Opção inválida.")
